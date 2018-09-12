@@ -4,16 +4,15 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import CustomButton from '../components/Button/Button';
 import Input from '../components/Input/Input';
 
-export default class Login extends React.Component {
+class SignUp extends React.Component {
   static navigationOptions = {
-    title: 'Login'
+    title: 'SignUp'
   };
 
   handleLogin = () => {
 
   }
   render() {
-    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.loginForm}>
@@ -28,15 +27,9 @@ export default class Login extends React.Component {
           />
           <CustomButton
             onPress={this.handleLogin}
-            title="Login"
+            title="SignUp"
             // style
           />
-          <View>
-            <Text>You don't have account? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-              <Text>SignUp</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
     );
@@ -58,4 +51,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// export default Login;
+export default SignUp;
