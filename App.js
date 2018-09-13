@@ -7,10 +7,14 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
-import Login from './src/screens/Login';
+import {Platform, StyleSheet, Text, View, YellowBox } from 'react-native';
+//
 import AppNavigator from './src/Navigator/AppNavigator';
+
+YellowBox.ignoreWarnings([
+  'Warning:',
+  'Warning: isMounted(...) is deprecated', 'Module RCTImageLoader'
+]);
 
 type Props = {};
 export default class App extends Component<Props> {

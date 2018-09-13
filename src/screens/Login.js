@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 //
 import CustomButton from '../components/Button/Button';
 import Input from '../components/Input/Input';
+import * as colors from '../theme/colors';
 
 export default class Login extends React.Component {
   static navigationOptions = {
@@ -10,7 +11,7 @@ export default class Login extends React.Component {
   };
 
   handleLogin = () => {
-
+    this.props.navigation.navigate('App')
   }
   render() {
     const { navigation } = this.props;
@@ -31,10 +32,10 @@ export default class Login extends React.Component {
             title="Login"
             // style
           />
-          <View>
+          <View style={styles.noAccount}>
             <Text>You don't have account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-              <Text>SignUp</Text>
+              <Text style={styles.signup}>SignUp</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -53,8 +54,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     width: '100%'
   },
-  loginButton: {
-
+  noAccount: {
+    flexDirection: 'row',
+    marginVertical: 32
+  },
+  signup: {
+    color: colors.PRIMARY_COLOR,
+    textDecorationLine: 'underline'
   }
 });
 

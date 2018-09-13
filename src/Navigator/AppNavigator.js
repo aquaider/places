@@ -1,8 +1,44 @@
 import React from 'react';
-import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
+import { Image, StyleSheet } from 'react-native';
+import {
+  createSwitchNavigator, createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
 //
 import LoginScreen from '../screens/Login';
 import SignUpScreen from '../screens/SignUp';
+import PlacesScreen from '../screens/Places';
+import AddPlaceScreen from '../screens/AddPlace';
+import * as colors from '../theme/colors';
+
+import logo from '../assets/images/logo.png';
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 35,
+    height: 35,
+    marginHorizontal: 16
+  }
+})
+
+const AppScreens = createBottomTabNavigator({
+  Places: PlacesScreen,
+  AddPlace: AddPlaceScreen,
+}, {
+  tabBarOptions: {
+    activeTintColor: colors.PRIMARY_COLOR,
+    // showLabel: false
+  }
+});
+
+const AppStack = createStackNavigator({
+  AppScreens
+}, {
+  navigationOptions: {
+    title: 'GGateway',
+    headerLeft: <Image source={logo} style={styles.logo} />
+  }
+});
 
 const AuthScreens = createStackNavigator({
   Login: LoginScreen,
@@ -13,6 +49,7 @@ const AuthScreens = createStackNavigator({
 
 const AppNavigator = createSwitchNavigator({
   Auth: AuthScreens,
+  App: AppStack,
 }, {
   initialRouteName: 'Auth'
 });
