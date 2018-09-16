@@ -1,3 +1,4 @@
+import { ADD_PLACE, DELETE_PLACE } from '../actionsTypes';
 
 const initialState = [
   {
@@ -14,12 +15,14 @@ const initialState = [
 
 const placesReducer = (state=initialState, action) => {
   switch (action.type) {
-    case 'ADD_PLACE':
+    case ADD_PLACE:
       return [...state, {
         name: action.payload.name,
         id: Math.random(),
         image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
       }];
+    case DELETE_PLACE:
+      return state.filter(place => place.id !== action.payload.id);
     default:
       return state
   }

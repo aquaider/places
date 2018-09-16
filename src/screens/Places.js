@@ -27,8 +27,14 @@ class Places extends React.Component {
     }
   }
   _renderItem = ({ item }) => {
+    const { navigation } = this.props;
     return (
-      <TouchableOpacity style={styles.placeRow}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('PlaceDetail', {
+          item
+        })}
+        style={styles.placeRow}
+      >
         <Image
           style={styles.placeImage}
           source={{ uri: item.image }}

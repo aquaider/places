@@ -9,6 +9,8 @@ import LoginScreen from '../screens/Login';
 import SignUpScreen from '../screens/SignUp';
 import PlacesScreen from '../screens/Places';
 import AddPlaceScreen from '../screens/AddPlace';
+import PlaceDetailScreen from '../screens/PlaceDetail';
+
 import * as colors from '../theme/colors';
 
 import logo from '../assets/images/logo.png';
@@ -32,12 +34,22 @@ const AppScreens = createBottomTabNavigator({
 });
 
 const AppStack = createStackNavigator({
-  AppScreens
+  AppScreens,
 }, {
   navigationOptions: {
     title: 'GGateway',
     headerLeft: <Image source={logo} style={styles.logo} />
   }
+});
+
+const FullAppScreens = createStackNavigator({
+  AppStack: {
+    screen: AppStack,
+    navigationOptions: {
+      header: null
+    }
+  },
+  PlaceDetail: PlaceDetailScreen
 });
 
 const AuthScreens = createStackNavigator({
@@ -49,7 +61,7 @@ const AuthScreens = createStackNavigator({
 
 const AppNavigator = createSwitchNavigator({
   Auth: AuthScreens,
-  App: AppStack,
+  App: FullAppScreens,
 }, {
   initialRouteName: 'Auth'
 });

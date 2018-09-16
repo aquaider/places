@@ -1,15 +1,19 @@
+import * as types from '../actionsTypes';
 
 export const addPlace = (name) => {
   return {
-    type: 'ADD_PLACE',
+    type: types.ADD_PLACE,
     payload: {
       name,
     }
   }
 };
 
-const deletePlace = id => {
+export const deletePlace = id => {
   return {
-    type: 'DELETE_PLACE'
+    type: types.DELETE_PLACE,
+    payload: {
+      id
+    }
   }
-}
+};
