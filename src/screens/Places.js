@@ -5,6 +5,7 @@ import {
   Image, TextInput, Button,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 //
 import * as colors from '../theme/colors';
@@ -25,21 +26,6 @@ class Places extends React.Component {
       text: ''
     }
   }
-
-  addPlace = () => {
-    const { text } = this.state;
-    // const newPlaces = [
-    //   {
-    //     image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
-    //     name: text,
-    //     id: places.length
-    //   },
-    //   ...places
-    // ];
-    // this.setState({
-    //   places: newPlaces
-    // })
-  };
   _renderItem = ({ item }) => {
     return (
       <TouchableOpacity style={styles.placeRow}>
@@ -55,14 +41,6 @@ class Places extends React.Component {
     const { places } = this.props;
     return (
       <View style={styles.container}>
-        <View>
-          <TextInput
-            onChangeText={(text) => this.setState({ text })}
-            placeholder="Add place" />
-          <Button
-            onPress={this.addPlace}
-            title="add" />
-        </View>
         <FlatList
           data={places}
           renderItem={this._renderItem}
@@ -97,4 +75,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Places);
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators({
+//
+//   }, dispatch)
+// }
+export default connect(mapStateToProps,)(Places);

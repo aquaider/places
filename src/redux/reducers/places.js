@@ -13,7 +13,16 @@ const initialState = [
 ];
 
 const placesReducer = (state=initialState, action) => {
-  return state;
+  switch (action.type) {
+    case 'ADD_PLACE':
+      return [...state, {
+        name: action.payload.name,
+        id: Math.random(),
+        image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
+      }];
+    default:
+      return state
+  }
 };
 
 export default placesReducer;

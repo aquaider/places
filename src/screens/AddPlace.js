@@ -1,6 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+//
+import { addPlace } from '../redux/actions/places';
 
 class AddPlace extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -12,10 +16,30 @@ class AddPlace extends React.Component {
       }
     }
   };
+
+  state = {
+    placeName: '',
+  };
+
+  handleInputChange = text => {
+    this.setState({ placeName: text })
+  };
+
+  addPlace = () => {
+    const { placeName } = this.state;
+    this.props.addPlace(placeName)
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text>AddPlace Screen</Text>
+        <View>
+          <TextInput
+            onChangeText={this.handleInputChange}
+            placeholder="Add place" />
+          <Button
+            onPress={this.addPlace}
+            title="add" />
+        </View>
       </View>
     );
   }
@@ -27,4 +51,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddPlace;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    addPlace
+  }, dispatch)
+  // return {
+  //   addPlace: (name) => dispatch(addPlace(name))
+  // }
+}
+
+export default connect(null,mapDispatchToProps)(AddPlace);
