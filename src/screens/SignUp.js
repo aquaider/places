@@ -1,18 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View, Text, StyleSheet,
+  Dimensions,
+} from 'react-native';
 //
 import CustomButton from '../components/Button/Button';
 import Input from '../components/Input/Input';
 
+const { height } = Dimensions.get('window');
 class SignUp extends React.Component {
   static navigationOptions = {
     title: 'SignUp'
   };
 
+  state = {
+    viewMode: height > 500 ? 'portrait' : 'landscape'
+  };
+
+  handleDimensionsChange = dims => {
+    const height = dims.window.height;
+    this.setState({
+      viewMode: height > 500 ? 'portrait' : 'landscape'
+    })
+  }
+
+  componentWillUnMount() {
+
+  }
+
   handleLogin = () => {
 
   }
   render() {
+    const { viewMode } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.loginForm}>
@@ -20,11 +40,21 @@ class SignUp extends React.Component {
             keyboardType="email-address"
             placeholder="Email"
           />
-          <Input
-            secureTextEntry
-            placeholder="Password"
+          <View style={styles[`${viewMode}PwContainer`]}>
+            <View style={styles[`${viewMode}PwInput`]}>
+              <Input
+                secureTextEntry
+                placeholder="Password"
 
-          />
+              />
+            </View>
+            <View style={styles[`${viewMode}PwInput`]}>
+              <Input
+                secureTextEntry
+                placeholder="Confirm Password"
+              />
+            </View>
+          </View>
           <CustomButton
             onPress={this.handleLogin}
             title="SignUp"
@@ -47,7 +77,21 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   loginButton: {
-
+  },
+  landscapePwContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%'
+  },
+  landscapePwInput: {
+    width: '45%'
+  },
+  portraitPwContainer: {
+    flexDirection: 'column',
+    width: '100%'
+  },
+  portraitPwInput: {
+    width: '100%'
   }
 });
 
