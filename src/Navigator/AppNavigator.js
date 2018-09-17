@@ -63,7 +63,8 @@ const AppNavigator = createSwitchNavigator({
   Auth: AuthScreens,
   App: FullAppScreens,
 }, {
-  initialRouteName: 'Auth'
+  // initialRouteName: 'Auth'
+  initialRouteName: 'App'
 });
 
 export default AppNavigator;

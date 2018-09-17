@@ -30,6 +30,9 @@ class PlaceDetail extends Component {
         <TitleText headType="h4">
           {item.name}
         </TitleText>
+        <TitleText headType="h4">
+          {JSON.stringify(item.location)}
+        </TitleText>
         <Image style={styles.placeImage} source={{ uri: item.image }} />
         <TouchableOpacity onPress={this.handleDeletePlace}>
           <Ionicons size={30} color={'#f00'} name="ios-trash" />

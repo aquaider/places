@@ -1,16 +1,16 @@
 import { ADD_PLACE, DELETE_PLACE } from '../actionsTypes';
 
 const initialState = [
-  {
-    image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
-    name: 'place 1',
-    id: 0,
-  },
-  {
-    image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
-    name: 'place 2',
-    id: 1
-  },
+  // {
+  //   image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
+  //   name: 'place 1',
+  //   id: 0,
+  // },
+  // {
+  //   image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
+  //   name: 'place 2',
+  //   id: 1
+  // },
 ];
 
 const placesReducer = (state=initialState, action) => {
@@ -18,6 +18,7 @@ const placesReducer = (state=initialState, action) => {
     case ADD_PLACE:
       return [...state, {
         name: action.payload.name,
+        location: action.payload.location,
         id: Math.random(),
         image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
       }];

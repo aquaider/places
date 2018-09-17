@@ -22,6 +22,7 @@ YellowBox.ignoreWarnings([
 ]);
 
 const store = configureStore();
+// AIzaSyCHQiktZJ0YIGHTn8qua12pu0pdPsctn94
 
 type Props = {};
 export default class App extends Component<Props> {
