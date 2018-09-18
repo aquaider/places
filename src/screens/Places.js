@@ -2,12 +2,13 @@ import React from 'react';
 import {
   View, Text, StyleSheet,
   FlatList, TouchableOpacity,
-  Image, TextInput, Button,
+  Image, TextInput, Button, ActivityIndicator,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 //
+import { fetchPlaces } from '../redux/actions/places';
 import * as colors from '../theme/colors';
 
 class Places extends React.Component {
@@ -19,6 +20,10 @@ class Places extends React.Component {
       }
     }
   };
+
+  componentDidMount() {
+    this.props.fetchPlaces();
+  }
 
   constructor() {
     super();
@@ -44,13 +49,20 @@ class Places extends React.Component {
     )
   }
   render() {
-    const { places } = this.props;
+    const { places, loading } = this.props;
+    if(loading) {
+      return (
+        <View style={styles.activityIndicContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+      )
+    }
     return (
       <View style={styles.container}>
         <FlatList
           data={places}
           renderItem={this._renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.key}
         />
       </View>
     );
@@ -72,18 +84,24 @@ const styles = StyleSheet.create({
     height: 40,
     marginRight: 16,
     borderRadius: 6,
+  },
+  activityIndicContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 
 const mapStateToProps = (state) => {
   return {
-    places: state.places,
+    places: state.places.data,
+    loading: state.places.loading,
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({
-//
-//   }, dispatch)
-// }
-export default connect(mapStateToProps,)(Places);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    fetchPlaces
+  }, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Places);

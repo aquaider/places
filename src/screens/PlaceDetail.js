@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity, Dimensions} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
+import MapView, { Marker } from 'react-native-maps';
 //
 import TitleText from '../components/TitleText/TitleText';
 import { deletePlace } from '../redux/actions/places';
@@ -25,14 +26,23 @@ class PlaceDetail extends Component {
     const { navigation } = this.props;
     const { state } = navigation;
     const { item } = state.params;
+    const  focusedLocation = {
+      latitude: item.location.latitude,
+      longitude: item.location.longitude,
+      latitudeDelta: 0.0122,
+      longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
+    }
     return (
       <View style={styles.container}>
         <TitleText headType="h4">
           {item.name}
         </TitleText>
-        <TitleText headType="h4">
-          {JSON.stringify(item.location)}
-        </TitleText>
+        <MapView
+          scrollEnabled={false}
+          style={styles.map}
+          initialRegion={focusedLocation}>
+          <Marker coordinate={focusedLocation} />
+        </MapView>
         <Image style={styles.placeImage} source={{ uri: item.image }} />
         <TouchableOpacity onPress={this.handleDeletePlace}>
           <Ionicons size={30} color={'#f00'} name="ios-trash" />
@@ -50,6 +60,10 @@ const styles = StyleSheet.create({
   placeImage: {
     width: '100%',
     height: 150
+  },
+  map: {
+    width: '100%',
+    height: 200
   }
 });
 

@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, TextInput, Button, Dimensions, ScrollView } fro
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 //
 import { addPlace } from '../redux/actions/places';
 import PickLocation from '../components/PickLoction/PickLocation';
+import PickImage from '../components/PickImage/PickImage';
 
 class AddPlace extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -42,10 +44,7 @@ class AddPlace extends React.Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-          <View style={styles.imagePlaceholder}>
-            <Text>Image placeholder</Text>
-          </View>
-          <Button title="Pick Image" />
+          <PickImage />
           <PickLocation onPickLocation={this.handlePickLocation} />
           <View>
             <TextInput
@@ -65,12 +64,6 @@ class AddPlace extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  imagePlaceholder: {
-    width: '100%',
-    height: 200,
-    backgroundColor: '#9d9d9d',
-    borderColor: 'black'
   },
   map: {
     width: '100%',
