@@ -12,6 +12,7 @@ const placesReducer = (state=initialState, action) => {
         data: [...state.data, {
           name: action.payload.name,
           location: action.payload.location,
+          image: action.payload.image,
           key: action.payload.key,
           // image: 'https://multco.us/sites/default/files/styles/small/public/APFY_tem_webbanner.png',
         }]

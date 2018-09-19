@@ -24,6 +24,7 @@ class AddPlace extends React.Component {
   state = {
     placeName: '',
     location: null,
+    image: null,
   };
 
   handleInputChange = text => {
@@ -31,20 +32,25 @@ class AddPlace extends React.Component {
   };
 
   addPlace = () => {
-    const { placeName, location } = this.state;
-    this.props.addPlace(placeName, location)
+    const { placeName, location, image } = this.state;
+    this.props.addPlace(placeName, location, image)
   };
   handlePickLocation = location => {
     this.setState({
       location
     })
   };
+  handlePickImage = base64 => {
+    this.setState({
+      image: base64
+    })
+  }
   render() {
     const { focusedLocation } = this.state;
     return (
       <ScrollView>
         <View style={styles.container}>
-          <PickImage />
+          <PickImage onPickImage={this.handlePickImage} />
           <PickLocation onPickLocation={this.handlePickLocation} />
           <View>
             <TextInput

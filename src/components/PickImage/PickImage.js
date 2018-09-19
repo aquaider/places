@@ -18,10 +18,10 @@ class PickImage extends React.Component {
         // console.log('ImagePicker Error: ', response.error);
       }  else {
         let source = { uri: response.uri };
-        // response.data
           this.setState({
           source,
         })
+        this.props.onPickImage(response.data);
       }
     })
   }

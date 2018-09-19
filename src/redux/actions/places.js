@@ -3,20 +3,25 @@ import * as types from '../actionsTypes';
 
 const DB_URL = 'https://rn-course-216709.firebaseio.com';
 
-
-export const addPlace = (name, location) => {
+const STORE_IMAGE_URL = 'https://us-central1-rn-course-216709.cloudfunctions.net/storeImage';
+export const addPlace = (name, location, image) => {
   return async dispatch => {
     try {
+      const imgRes = await axios.post(STORE_IMAGE_URL, {
+        image: image
+      },);
+      const imageURL = imgRes.data.imageURL;
       const res = await axios.post(`${DB_URL}/places.json`, {
         name,
         location,
-        // image: null
+        image: imageURL
       });
       dispatch({
         type: types.ADD_PLACE,
         payload: {
           name,
           location,
+          image: imageURL,
           key: res.data.name
         }
       })
