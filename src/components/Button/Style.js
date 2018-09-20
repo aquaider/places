@@ -9,11 +9,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold'
+  },
+  disabled: {
+    backgroundColor: 'gray'
+  },
+  indicator: {
+    paddingHorizontal: 8,
+  },
+  loading: {
+    opacity: 0.6
   }
 });
 

@@ -3,9 +3,12 @@ import {
   View, Text, StyleSheet,
   Dimensions,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 //
 import CustomButton from '../components/Button/Button';
 import Input from '../components/Input/Input';
+import { signup } from '../redux/actions/auth';
 
 const { height } = Dimensions.get('window');
 class SignUp extends React.Component {
@@ -14,7 +17,9 @@ class SignUp extends React.Component {
   };
 
   state = {
-    viewMode: height > 500 ? 'portrait' : 'landscape'
+    viewMode: height > 500 ? 'portrait' : 'landscape',
+    email: '',
+    password: '',
   };
 
   handleDimensionsChange = dims => {
@@ -28,24 +33,35 @@ class SignUp extends React.Component {
 
   }
 
-  handleLogin = () => {
-
-  }
+  handleSignup = () => {
+    const { navigation } = this.props;
+    this.props.signup(this.state, navigation);
+  };
   render() {
     const { viewMode } = this.state;
+    const { loading } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.loginForm}>
           <Input
             keyboardType="email-address"
             placeholder="Email"
+            onChangeText={text => {
+              this.setState({
+                email: text
+              })
+            }}
           />
           <View style={styles[`${viewMode}PwContainer`]}>
             <View style={styles[`${viewMode}PwInput`]}>
               <Input
                 secureTextEntry
                 placeholder="Password"
-
+                onChangeText={text => {
+                  this.setState({
+                    password: text
+                  })
+                }}
               />
             </View>
             <View style={styles[`${viewMode}PwInput`]}>
@@ -56,8 +72,9 @@ class SignUp extends React.Component {
             </View>
           </View>
           <CustomButton
-            onPress={this.handleLogin}
+            onPress={this.handleSignup}
             title="SignUp"
+            loading={loading}
             // style
           />
         </View>
@@ -95,4 +112,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SignUp;
+const mapStateToProps = (state) => ({
+  loading: state.auth.loading,
+});
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    signup
+  }, dispatch);
+  // signup: (data) => dispatch(signup(data))
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

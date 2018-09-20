@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, Text, AsyncStorage } from 'react-native';
 import {
   createSwitchNavigator, createStackNavigator,
   createBottomTabNavigator,
@@ -10,7 +10,7 @@ import SignUpScreen from '../screens/SignUp';
 import PlacesScreen from '../screens/Places';
 import AddPlaceScreen from '../screens/AddPlace';
 import PlaceDetailScreen from '../screens/PlaceDetail';
-
+import LaunchScreen from '../screens/Launch';
 import * as colors from '../theme/colors';
 
 import logo from '../assets/images/logo.png';
@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     marginHorizontal: 16
+  },
+  signoutText: {
+    fontSize: 18,
+    paddingHorizontal: 16,
+    fontWeight: 'bold'
   }
 })
 
@@ -36,9 +41,24 @@ const AppScreens = createBottomTabNavigator({
 const AppStack = createStackNavigator({
   AppScreens,
 }, {
-  navigationOptions: {
-    title: 'GGateway',
-    headerLeft: <Image source={logo} style={styles.logo} />
+  navigationOptions: ({ navigation }) => {
+    return {
+      title: 'GGateway',
+      headerLeft: <Image source={logo} style={styles.logo} />,
+      headerRight: (
+        <TouchableOpacity
+          onPress={async () => {
+          try {
+            await AsyncStorage.removeItem('@p:auth');
+            navigation.navigate('Auth');
+          } catch (e) {
+
+          }
+        }}>
+          <Text style={styles.signoutText}>Signout</Text>
+        </TouchableOpacity>
+      )
+    }
   }
 });
 
@@ -60,11 +80,12 @@ const AuthScreens = createStackNavigator({
 });
 
 const AppNavigator = createSwitchNavigator({
+  Launch: LaunchScreen,
   Auth: AuthScreens,
   App: FullAppScreens,
 }, {
   // initialRouteName: 'Auth'
-  initialRouteName: 'App'
+  // initialRouteName: 'App'
 });
 
 export default AppNavigator;
