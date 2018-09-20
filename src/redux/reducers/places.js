@@ -1,8 +1,9 @@
-import { ADD_PLACE, DELETE_PLACE, FETCH_PLACES } from '../actionsTypes';
+import { ADD_PLACE, DELETE_PLACE, FETCH_PLACES, ADD_PLACE_LOADING } from '../actionsTypes';
 
 const initialState = {
   data: [],
   loading: true,
+  addPlaceLoading: false,
 };
 
 const placesReducer = (state=initialState, action) => {
@@ -28,6 +29,11 @@ const placesReducer = (state=initialState, action) => {
         ...state,
         data: action.payload,
         loading: false
+      };
+    case ADD_PLACE_LOADING:
+      return {
+        ...state,
+        addPlaceLoading: action.payload,
       };
     default:
       return state

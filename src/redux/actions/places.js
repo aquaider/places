@@ -1,12 +1,15 @@
 import axios from 'axios';
 import * as types from '../actionsTypes';
-
 const DB_URL = 'https://rn-course-216709.firebaseio.com';
 
 const STORE_IMAGE_URL = 'https://us-central1-rn-course-216709.cloudfunctions.net/storeImage';
-export const addPlace = (name, location, image) => {
+export const addPlace = (name, location, image, navigation) => {
   return async dispatch => {
     try {
+      dispatch({
+        type: types.ADD_PLACE_LOADING,
+        payload: true
+      });
       const imgRes = await axios.post(STORE_IMAGE_URL, {
         image: image
       },);
@@ -25,8 +28,14 @@ export const addPlace = (name, location, image) => {
           key: res.data.name
         }
       })
+      navigation.navigate('Places')
     } catch (error) {
       alert(error.message)
+    } finally {
+      dispatch({
+        type: types.ADD_PLACE_LOADING,
+        payload: false
+      });
     }
     // alert(`${name} ${JSON.stringify(location)}`);
   }

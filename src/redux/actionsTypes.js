@@ -5,3 +5,5 @@ export const FETCH_PLACES = 'FETCH_PLACES';
 
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+
+export const ADD_PLACE_LOADING = 'ADD_PLACE_LOADING'

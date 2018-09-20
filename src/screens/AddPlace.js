@@ -33,7 +33,8 @@ class AddPlace extends React.Component {
 
   addPlace = () => {
     const { placeName, location, image } = this.state;
-    this.props.addPlace(placeName, location, image)
+    const { navigation } = this.props
+    this.props.addPlace(placeName, location, image, navigation)
   };
   handlePickLocation = location => {
     this.setState({
@@ -47,6 +48,7 @@ class AddPlace extends React.Component {
   }
   render() {
     const { focusedLocation } = this.state;
+    const { addLoading } = this.props;
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -59,6 +61,7 @@ class AddPlace extends React.Component {
             <Button
               onPress={this.addPlace}
               title="add"
+              disabled={addLoading}
             />
           </View>
         </View>
@@ -77,6 +80,9 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapState = (state) => ({
+  addLoading: state.places.addPlaceLoading
+})
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     addPlace
@@ -86,4 +92,4 @@ const mapDispatchToProps = dispatch => {
   // }
 }
 
-export default connect(null,mapDispatchToProps)(AddPlace);
+export default connect(mapState,mapDispatchToProps)(AddPlace);
