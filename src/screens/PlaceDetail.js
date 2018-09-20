@@ -19,7 +19,7 @@ class PlaceDetail extends Component {
     const { navigation } = this.props;
     const { state } = navigation;
     const { item } = state.params;
-    this.props.deletePlace(item.id);
+    this.props.deletePlace(item.key);
     navigation.goBack();
   }
   render() {

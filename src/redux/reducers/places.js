@@ -3,7 +3,8 @@ import { ADD_PLACE, DELETE_PLACE, FETCH_PLACES } from '../actionsTypes';
 const initialState = {
   data: [],
   loading: true,
-}
+};
+
 const placesReducer = (state=initialState, action) => {
   switch (action.type) {
     case ADD_PLACE:
@@ -20,8 +21,8 @@ const placesReducer = (state=initialState, action) => {
     case DELETE_PLACE:
       return {
         ...state,
-        data: state.places.filter(place => place.id !== action.payload.id)
-      }
+        data: state.data.filter(place => place.key !== action.payload.key)
+      };
     case FETCH_PLACES:
       return {
         ...state,

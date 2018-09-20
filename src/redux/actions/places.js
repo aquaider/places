@@ -32,11 +32,18 @@ export const addPlace = (name, location, image) => {
   }
 };
 
-export const deletePlace = id => {
-  return {
-    type: types.DELETE_PLACE,
-    payload: {
-      id
+export const deletePlace = key => {
+  return async dispatch => {
+    try {
+      await axios.delete(`${DB_URL}/places/${key}.json`);
+      dispatch({
+        type: types.DELETE_PLACE,
+        payload: {
+          key
+        }
+      })
+    } catch (e) {
+      alert(e.message)
     }
   }
 };
