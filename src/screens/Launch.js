@@ -7,8 +7,16 @@ import { checkAuth } from '../redux/actions/auth'
 
 class Launch extends React.Component {
   componentDidMount() {
-    const { navigation } = this.props;
-    this.props.checkAuth(navigation);
+    this.handleAuth();
+  }
+
+  handleAuth = async () => {
+    try {
+      const { navigation } = this.props;
+      await this.props.checkAuth(true, navigation);
+    } catch (e) {
+
+    }
   }
 
   render() {

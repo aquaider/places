@@ -1,20 +1,23 @@
 import axios from 'axios';
 import * as types from '../actionsTypes';
-const DB_URL = 'https://rn-course-216709.firebaseio.com';
+import { checkAuth } from "./auth";
 
+const DB_URL = 'https://rn-course-216709.firebaseio.com';
 const STORE_IMAGE_URL = 'https://us-central1-rn-course-216709.cloudfunctions.net/storeImage';
+
 export const addPlace = (name, location, image, navigation) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({
         type: types.ADD_PLACE_LOADING,
         payload: true
       });
+      const idToken = getState().auth.idToken;
       const imgRes = await axios.post(STORE_IMAGE_URL, {
         image: image
       },);
       const imageURL = imgRes.data.imageURL;
-      const res = await axios.post(`${DB_URL}/places.json`, {
+      const res = await axios.post(`${DB_URL}/places.json?auth=${idToken}`, {
         name,
         location,
         image: imageURL
@@ -42,9 +45,10 @@ export const addPlace = (name, location, image, navigation) => {
 };
 
 export const deletePlace = key => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
-      await axios.delete(`${DB_URL}/places/${key}.json`);
+      const idToken = getState().auth.idToken;
+      await axios.delete(`${DB_URL}/places/${key}.json?auth=${idToken}`);
       dispatch({
         type: types.DELETE_PLACE,
         payload: {
@@ -58,9 +62,11 @@ export const deletePlace = key => {
 };
 
 export const fetchPlaces = () => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`${DB_URL}/places.json`);
+      await dispatch(checkAuth(false,));
+      const idToken = getState().auth.idToken;
+      const response = await axios.get(`${DB_URL}/places.json?auth=${idToken}`);
       let data = response.data;
       if(data !== null) {
         data = Object.keys(data).map(key => {
